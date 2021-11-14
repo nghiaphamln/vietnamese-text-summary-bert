@@ -20,7 +20,10 @@ def crawl_content(_url, _filename):
 
 if __name__ == "__main__":
     url = 'https://dantri.com.vn'
-    category = ['su-kien']
+    category = ['su-kien', 'xa-hoi', 'the-gioi', 'kinh-doanh', 'bat-dong-san', 'the-thao', 'lao-dong-viec-lam',
+                'tam-long-nhan-ai', 'suc-khoe', 'van-hoa', 'giai-tri', 'o-to-xe-may', 'suc-manh-so',
+                'giao-duc-huong-nghiep', 'an-sinh', 'phap-luat', 'photo-story', 'du-lich', 'tinh-yeu-gioi-tinh',
+                'khoa-hoc-cong-nghe', 'ban-doc', 'doi-song', 'nhip-song-tre', 'blog', 'emagazine', 'infographic']
     for _category in category:
         for page in range(1, 31):
             print('Crawling Catagory {} - Page {}'.format(_category, page))
