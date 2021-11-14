@@ -6,7 +6,7 @@ import requests  # get html
 
 # save content to file
 def save_file(_filename, _data):
-    with open(_filename, 'w') as f:
+    with open(_filename, 'w', encoding='utf-8') as f:
         f.write(_data)
 
 
