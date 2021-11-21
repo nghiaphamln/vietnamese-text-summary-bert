@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, url_for
 import torch
 from models.model_builder import ExtSummarizer
 from newspaper import Article
@@ -26,12 +26,45 @@ model = load_model('mobilebert')
 
 @app.route('/')
 def welcome():
-    return jsonify({
-        'message': 'Chào mừng bạn đến với API tóm tắc văn bản Tiếng Việt'
-    })
+    return render_template('index.html')
 
 
 @app.route('/text-summary', methods=['POST'])
+def text_summary():
+    data = request.form['content']
+    data_type = request.form['data_type']
+    length = request.form['data_length']
+
+    # chỗ này là kiểm tra độ dài văn bản tóm tắt mong muốn nè
+    if length == 'short':
+        max_length = 3
+    else:
+        max_length = 5
+
+    # chỗ này là kiểm tra nếu là url thì mình sẽ crawl và lấy text từ url đó
+    if data_type == 'url':
+        try:
+            text = crawl_url(data)
+            input_fp = "raw_data/input.txt"
+            with open(input_fp, "w", encoding="utf-8") as f:
+                f.write(text)
+            result_fp = 'results/summary.txt'
+            summary = summarize(input_fp, result_fp, model, max_length=max_length)
+            return render_template('index.html', summary=summary)
+        except Exception as ex:
+            print(ex)
+            return render_template('index.html', error=True)
+    # nếu là raw_data thì chỉ cần xử lí data truyền vào và trả về data thôi nè
+    else:
+        input_fp = "raw_data/input.txt"
+        with open(input_fp, "w", encoding="utf-8") as f:
+            f.write(data)
+        result_fp = 'results/summary.txt'
+        summary = summarize(input_fp, result_fp, model, max_length=max_length)
+        return render_template('index.html', summary=summary)
+
+
+@app.route('/api/text-summary', methods=['POST'])
 def text_summary_api():
     data = request.get_json()
     try:
@@ -99,4 +132,4 @@ def text_summary_api():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

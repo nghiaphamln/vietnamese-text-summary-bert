@@ -1,0 +1,15 @@
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+	margin-top: 30px;
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	color: #FF1317;
+	font-style: bold;
+}
+label{
+	text-indent: 20px;
+}
+.form-check-input{
+	margin-left: 20px;
+}
+textarea.form-control{
+	height: 180px;
+}
