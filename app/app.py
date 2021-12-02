@@ -35,7 +35,7 @@ def text_summary():
     data_type = request.form['data_type']
     length = request.form['data_length']
 
-    # chỗ này là kiểm tra độ dài văn bản tóm tắt mong muốn nè
+    # chỗ này là độ dài văn bản tóm tắt mong muốn nè
     if length == 'short':
         max_length = 3
     else:
@@ -132,4 +132,4 @@ def text_summary_api():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
